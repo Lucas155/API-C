@@ -4,9 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using DataAccess.Models;
+using Microsoft.AspNetCore.Cors;
 
 namespace Api.Controllers
 {
+    [EnableCors("AllowMyOrigin")]
     [Route("api/[controller]")]
     [ApiController]
     public class ValuesController : ControllerBase
@@ -14,6 +16,7 @@ namespace Api.Controllers
         // GET api/values
         ProdutosRepository produtoRepository = new ProdutosRepository();
 
+        [EnableCors("AllowMyOrigin")]
         [HttpGet]
         public List<Produtos> ListaProdutos()
         {
@@ -21,6 +24,7 @@ namespace Api.Controllers
         }
 
         // GET api/values/5
+        [EnableCors("AllowMyOrigin")]
         [HttpGet("{id}")]
         public Produtos ListProdutoId(int id)
         {
@@ -29,6 +33,7 @@ namespace Api.Controllers
 
         string status = "";
         // POST api/values
+        [EnableCors("AllowMyOrigin")]
         [HttpPost]
         public string Insert([FromBody] Produtos produtos)
         {
@@ -47,40 +52,40 @@ namespace Api.Controllers
 
 
         // PUT api/values/5
+        [EnableCors("AllowMyOrigin")]
         [HttpPut("{id}")]
-        public string Update([FromBody] Produtos produtos, int id)
-        {
-            try
-            {
-                produtoRepository.Update(id, produtos);
-                status = "Produto atualizado updated";
-            }
-            catch (Exception e)
-            {
-                status = e.GetBaseException().ToString();
-            }
+         public string Update([FromBody] Produtos produtos, int id)
+         {
+             try
+             {
+                 produtoRepository.Update(id,produtos);
+                 status = "Produto atualizado";
+             }
+             catch (Exception e)
+             {
+                 status = e.GetBaseException().ToString();
+             }
 
-            return status;
-        }
+             return status;
+         }
 
 
         // DELETE api/values/5
+        [EnableCors("AllowMyOrigin")]
         [HttpDelete("{id}")]
-        public string Delete(int id)
-        {
-            try
-            {
-                produtoRepository.Delete(id);
-                status = "Produto deletado";
-            }
-            catch(Exception e)
-            {
-                status = e.GetBaseException().ToString();
-            }
+         public string Delete(int id)
+         {
+             try
+             {
+                 produtoRepository.DeleteProdutos(id);
+                 status = "Produto deletado";
+             }
+             catch(Exception e)
+             {
+                 status = e.GetBaseException().ToString();
+             }
 
-            return status;
-        }
-
-      
+             return status;
+         }
     }
 }

@@ -20,9 +20,9 @@ namespace DataAccess.Models
             return conn.Produtos.ToList();
         }
 
-        public Produtos ListProdutoId(Produtos produtos, int id)
+        public Produtos ListProdutoId(int id)
         {
-            return conn.Produtos.Where(x => x.Id == produtos.Id).FirstOrDefault();
+            return conn.Produtos.Where(x => x.Id == id).FirstOrDefault();
         }
 
         public void Insert(Produtos produtos)
@@ -37,27 +37,23 @@ namespace DataAccess.Models
             conn.SaveChanges();
         }
 
-        public void Update(Produtos produto)
+        public void Update(int id, Produtos produto)
         {
-            Produtos produtos = conn.Produtos.Where(x => x.Id == produto.Id).FirstOrDefault();
+            Produtos produtos = conn.Produtos.Where(x => x.Id == id).FirstOrDefault();
             produtos.Produto = produto.Produto;
             produtos.Preco = produto.Preco;
             produtos.Sku = produto.Sku;
             
-
             conn.Entry(produtos).State = EntityState.Modified;
             conn.SaveChanges();
         }
 
-        public void Delete(Produtos produto)
+        public void DeleteProdutos(int id) // delete the client from table
         {
+            Produtos produtos = conn.Produtos.Where(x => x.Id == id).FirstOrDefault();
 
-            Produtos produtos = conn.Produtos.Where(x => x.Id == produto.Id).FirstOrDefault();
-            produtos.Id = 0;
-
-            conn.Entry(produtos).State = EntityState.Modified;
+            conn.Produtos.Remove(produtos);
             conn.SaveChanges();
-
         }
     }
 }

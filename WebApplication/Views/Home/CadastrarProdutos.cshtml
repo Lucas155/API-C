@@ -1,0 +1,29 @@
+﻿@model WebApplication.Models.Produtos
+@{
+
+    ViewData["Title"] = "Cadastro de produtos";
+}
+
+
+@using (Html.BeginForm("InsertProduto", "Home", new { }, FormMethod.Post))
+{
+    <div class="form-group">
+        @Html.TextBoxFor(x => x.id, "000-000", new { @class = "form-control", id = "id" })
+    </div>
+    <div class="form-group">
+        @Html.Label("Produto:")
+        @Html.TextBoxFor(x => x.Produto, "", new { @class = "form-control", id = "produto", autocompleto = "off", autofocus = "true" })
+    </div>
+    <div class="form-group">
+        @Html.Label("Preço:")
+        @Html.TextBoxFor(x => x.preco, "", new { @class = "form-control", id = "preco", autocompleto = "off", autofocus = "true" })
+    </div>
+    <div class="form-group">
+        @Html.Label("Sku:")
+        @Html.TextBoxFor(x => x.sku, "", new { @class = "form-control", id = "sku", autocompleto = "off", autofocus = "true" })
+    </div>
+
+    <div class="form-group">
+        <input type="submit" id="div_Button" value="Cadastrar" />
+    </div>
+}

@@ -1,0 +1,35 @@
+﻿@model List<WebApplication.Models.Produtos>
+@{
+    ViewData["Title"] = "Home Page";
+
+
+}
+
+<h1>Lista de Produto</h1>
+
+    
+      @if (Model != null)
+      {
+          @foreach (var item in Model)
+          {
+              <tr>
+                  <br/>
+                  <td>
+                      @Html.Label("Produto")
+                      @Html.DisplayFor(modelItem => item.Produto)
+                  </td>
+                  <br/>
+                  <td>
+                      @Html.Label("Preço")
+                      @Html.DisplayFor(modelItem => item.preco)
+                  </td>
+                  <br/>
+                  <td>
+                      @Html.Label("Sku")
+                      @Html.DisplayFor(modelItem => item.sku)
+                  </td>
+
+              </tr>
+
+          }
+      }
