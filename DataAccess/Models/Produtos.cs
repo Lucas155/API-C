@@ -7,7 +7,7 @@ namespace DataAccess.Models
     {
         public int Id { get; set; }
         public string Produto { get; set; }
-        public decimal? Preco { get; set; }
-        public int? Sku { get; set; }
+        public double Preco { get; set; }
+        public int Sku { get; set; }
     }
 }

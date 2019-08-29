@@ -47,7 +47,7 @@ namespace WebApplication.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Insert_Client(Produtos produtos)
+        public async Task<IActionResult> insertProduto(Produtos produtos)
         {
             try
             {
