@@ -4,20 +4,20 @@
     "windowsAuthentication": false, 
     "anonymousAuthentication": true, 
     "iisExpress": {
-      "applicationUrl": "http://localhost:62384",
-      "sslPort": 44372
+      "applicationUrl": "http://localhost:61816",
+      "sslPort": 44361
     }
   },
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "api/values",
+      "launchUrl": "api/books",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "MongoApi": {
+    "BooksApi": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "api/values",

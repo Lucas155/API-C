@@ -6,9 +6,8 @@
 @using (Html.BeginForm("insertProduto", "Home", FormMethod.Post, new { }))
 
 {
-    <div class="form-group">
-        @Html.TextBoxFor(x => x.id, "000-000", new { @class = "form-control", id = "id" })
-    </div>
+    <h1>Cadastro de Produtos</h1>
+
     <div class="form-group">
         @Html.Label("Produto:")
         @Html.TextBoxFor(x => x.Produto, "", new { @class = "form-control", id = "produto", autocompleto = "off", autofocus = "true" })
@@ -23,6 +22,6 @@
     </div>
 
     <div class="form-group">
-        <input type="submit" id="Button" value="Cadastrar" />
+        <input type="submit" class="btn btn-primary" id="Button" value="Cadastrar" />
     </div>
 }

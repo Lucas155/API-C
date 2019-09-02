@@ -13,6 +13,6 @@ namespace WebApplication.Models
 
             public double preco { get; set; }
 
-            public int sku { get; set; }
+            public double sku { get; set; }
     }
 }

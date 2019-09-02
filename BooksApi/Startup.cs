@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BooksApi.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -10,9 +11,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using MongoApi.Models;
 
-namespace MongoApi
+
+namespace BooksApi
 {
     public class Startup
     {
@@ -26,14 +27,13 @@ namespace MongoApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<ProdutostoreDatabaseSettings>(
-                Configuration.GetSection(nameof(ProdutostoreDatabaseSettings)));
+            services.Configure<BookstoreDatabaseSettings>(
+                Configuration.GetSection(nameof(BookstoreDatabaseSettings)));
 
-            services.AddSingleton<IProdutostoreDatabaseSettings>(sp =>
-                sp.GetRequiredService<IOptions<ProdutostoreDatabaseSettings>>().Value);
+            services.AddSingleton<IBookstoreDatabaseSettings>(sp =>
+                sp.GetRequiredService<IOptions<BookstoreDatabaseSettings>>().Value);
 
-            services.AddSingleton<ProdutoService>();
-
+            services.AddSingleton<BookService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

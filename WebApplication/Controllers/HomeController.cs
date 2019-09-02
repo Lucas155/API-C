@@ -19,7 +19,7 @@ namespace WebApplication.Controllers
         {
 
                 List<Produtos> dbProdutos = new List<Produtos>();
-                Task<String> response = produto.GetStringAsync("https://localhost:44335/api/values"); 
+                Task<String> response = produto.GetStringAsync("https://localhost:44372/api/values"); 
                // string allProdutos = (response.Result).Replace("[", "").Replace("]", "").Replace("},{", "}},{{"); 
 
                 List<Produtos> logs = JsonConvert.DeserializeObject<List<Produtos>>(response.Result);
@@ -51,7 +51,7 @@ namespace WebApplication.Controllers
         {
             try
             {
-                HttpResponseMessage response = await produto.PostAsJsonAsync("https://localhost:44335/api/values", produtos); //sends a POST request to API and send to the body the second parameter serialized 
+                HttpResponseMessage response = await produto.PostAsJsonAsync("https://localhost:44372/api/values", produtos); //sends a POST request to API and send to the body the second parameter serialized 
                 return RedirectToAction("Index"); // and returns to the Home Page
             }
             catch (Exception e)

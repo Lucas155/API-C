@@ -2,34 +2,53 @@
 @{
     ViewData["Title"] = "Home Page";
 
-
 }
 
 <h1>Lista de Produto</h1>
 
-    
-      @if (Model != null)
-      {
-          @foreach (var item in Model)
-          {
-              <tr>
-                  <br/>
-                  <td>
-                      @Html.Label("Produto:")
-                      @Html.DisplayFor(modelItem => item.Produto)
-                  </td>
-                  <br/>
-                  <td>
-                      @Html.Label("Preço:")
-                      @Html.DisplayFor(modelItem => item.preco)
-                  </td>
-                  <br/>
-                  <td>
-                      @Html.Label("Sku:")
-                      @Html.DisplayFor(modelItem => item.sku)
-                  </td>
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Produtos</th>
+            <th scope="col">Preço</th>
+            <th scope="col">Sku</th>
+            <th scope="col">#</th>
+        </tr>
+    </thead>
 
-              </tr>
+    @if (Model != null)
+    {
+        @foreach (var item in Model)
+        {
+            <tbody>
+                <tr>
+                    <th scope=""></th>
+                    <td>@Html.DisplayFor(modelItem => item.Produto)</td>
+                    <td>@Html.DisplayFor(modelItem => item.preco)</td>
+                    <td>@Html.DisplayFor(modelItem => item.sku)</td>
+                    <td type="submit" id="Button" value="Delete" onclick="teste()"></td>
+                </tr>
+            </tbody>
+        }
+    }
 
-          }
-      }
+</table>
+
+<script>
+
+        function teste(){
+        alert("OPA");
+    }
+
+</script>
+
+<style>
+
+    #Button{
+
+     width: 50px;
+     height: 5px;
+     
+    }
+</style>
