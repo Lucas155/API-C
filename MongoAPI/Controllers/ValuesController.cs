@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using MongoApi.Models;
 using Nest;
 
 namespace MongoApi.Controllers
 {
+    [EnableCors("AllowMyOrigin")]
     [Route("api/[controller]")]
     [ApiController]
     public class ValuesController : ControllerBase
@@ -36,6 +38,7 @@ namespace MongoApi.Controllers
             return produto;
         }
 
+        [EnableCors("AllowMyOrigin")]
         [HttpPost]
         public ActionResult<Produtos> Create(Produtos produtos)
         {
@@ -44,6 +47,7 @@ namespace MongoApi.Controllers
             return CreatedAtRoute("GetProduto", new { id = produtos._id.ToString() }, produtos);
         }
 
+        [EnableCors("AllowMyOrigin")]
         [HttpPut("{id}")]
         public IActionResult Update(string id, Produtos produtosIn)
         {
@@ -59,6 +63,7 @@ namespace MongoApi.Controllers
             return NoContent();
         }
 
+        [EnableCors("AllowMyOrigin")]
         [HttpDelete("{id:length(24)}")]
         public IActionResult Delete(string id)
         {

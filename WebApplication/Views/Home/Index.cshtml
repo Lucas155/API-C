@@ -1,4 +1,5 @@
 ﻿@model List<WebApplication.Models.Produtos>
+
 @{
     ViewData["Title"] = "Home Page";
 
@@ -9,13 +10,15 @@
 <table class="table">
     <thead class="thead-dark">
         <tr>
-            <th scope="col">#</th>
+            <th scope="col">id</th>
             <th scope="col">Produtos</th>
             <th scope="col">Preço</th>
             <th scope="col">Sku</th>
-            <th scope="col">#</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
         </tr>
     </thead>
+
 
     @if (Model != null)
     {
@@ -23,32 +26,95 @@
         {
             <tbody>
                 <tr>
-                    <th scope=""></th>
+                    <td>@Html.DisplayFor(modelItem => item.Id)</td>
                     <td>@Html.DisplayFor(modelItem => item.Produto)</td>
-                    <td>@Html.DisplayFor(modelItem => item.preco)</td>
-                    <td>@Html.DisplayFor(modelItem => item.sku)</td>
-                    <td type="submit" id="Button" value="Delete" onclick="teste()"></td>
+                    <td>@Html.DisplayFor(modelItem => item.Preco)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Sku)</td>
+                    <td>
+                        <button type="submit" id="delete" class="btn btn-primary" onclick="DeleteProduto()">Delete</button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ExemploModalCentralizado">Editar</button>
+                    </td>
+                    <td>
+                        @Html.ActionLink("EditarProdutos", "EditarProdutos", new {Id = item.Id, Produtos = item.Produto, Preco = item.Preco, Sku = item.Sku})
+                    </td>
+                    <td>
+                        @*@Html.ActionLink("Inactive", "Delete", new { id = item.id})*@
+
+                    </td>
                 </tr>
             </tbody>
+            
+                        
         }
     }
 
+   
+
 </table>
+
+<!-- Modal -->
+<div class="modal fade" id="ExemploModalCentralizado" tabindex="-5" role="dialog" aria-labelledby="TituloModalCentralizado" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="TituloModalCentralizado">Atualizar Produtos</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div>
+
+
+                @Html.Label("Produto:")
+                @Html.TextBox("frmUserName", "")
+                <br />
+
+                @Html.Label("Preço:")
+                @Html.TextBox("frmUserName", "")
+                <br />
+
+                @Html.Label("Sku:")
+                @Html.TextBox("frmUserName", "")
+
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary">Salvar mudanças</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
 
-        function teste(){
+    function DeleteProduto() {
+
+        var answer = window.confirm("Are you sure you want to DELETE this Client ?")
+        if (answer) {
+
+        // AJAX Delete Request to API
+
+        $.ajax({
+            url: 'https://localhost:44372/api/values'+ id, // url
+            type: 'DELETE', // request type
+            success: function (msg) { 
+                alert(msg); // if the request be succesifully 
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                alert("error: \n" + xhr.catch); // if the request return error
+            }
+        });
+
+        }
+    }
+
+
+    function teste() {
         alert("OPA");
     }
 
 </script>
-
-<style>
-
-    #Button{
-
-     width: 50px;
-     height: 5px;
-     
-    }
-</style>

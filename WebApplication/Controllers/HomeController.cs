@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using WebApplication.Models;
 
 namespace WebApplication.Controllers
@@ -20,7 +21,6 @@ namespace WebApplication.Controllers
 
                 List<Produtos> dbProdutos = new List<Produtos>();
                 Task<String> response = produto.GetStringAsync("https://localhost:44372/api/values"); 
-               // string allProdutos = (response.Result).Replace("[", "").Replace("]", "").Replace("},{", "}},{{"); 
 
                 List<Produtos> logs = JsonConvert.DeserializeObject<List<Produtos>>(response.Result);
 
@@ -34,6 +34,11 @@ namespace WebApplication.Controllers
 
 
         public IActionResult CadastrarProdutos()
+        {
+            return View();
+        }
+
+        public IActionResult EditarProdutos(Produtos produtos)
         {
             return View();
         }
@@ -52,6 +57,43 @@ namespace WebApplication.Controllers
             try
             {
                 HttpResponseMessage response = await produto.PostAsJsonAsync("https://localhost:44372/api/values", produtos); //sends a POST request to API and send to the body the second parameter serialized 
+                return RedirectToAction("Index"); // and returns to the Home Page
+            }
+            catch (Exception e)
+            {
+                string erro = e.GetBaseException().ToString(); // in case of error he simply keep the error message
+                return RedirectToAction("Index"); // and returns to the Home Page
+            }
+        }
+
+        public async Task<IActionResult> UpdateProdutos(int id, Produtos produtos)
+        {
+            try
+            {
+                produtos.Id = 1; // putting a value because it cannot be null
+                string DadosProdutos = JsonConvert.SerializeObject(produtos); // Serializing object to put in the JsonObject
+
+                JObject jsonClient = JObject.Parse(DadosProdutos); // putting in the JsonObject
+
+                HttpResponseMessage response = await produto.PutAsJsonAsync("https://localhost:44372/api/values" + id, jsonClient); //sends a DELETE request to API with the body as Json
+                return RedirectToAction("Index"); // and returns to the Home Page
+            }
+            catch (Exception e)
+            {
+                string erro = e.GetBaseException().ToString(); // in case of error he simply keep the error message
+                return RedirectToAction("Index"); // and returns to the Home Page
+            }
+        }
+
+        public async Task<IActionResult> Delete(string id )
+        {
+            
+            try
+            {
+                 // If he is already disable, lets active him
+                    HttpResponseMessage response = await produto.DeleteAsync("https://localhost:44372/api/values" + id); //sends a DELETE request to API
+                
+
                 return RedirectToAction("Index"); // and returns to the Home Page
             }
             catch (Exception e)

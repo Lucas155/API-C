@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,12 +9,14 @@ namespace WebApplication.Models
 {
     public class Produtos
     {
-            public string id { get; set; }
+            [BsonId]
+            [BsonRepresentation(BsonType.ObjectId)]
+            public string Id { get; set; }
 
             public string Produto { get; set; }
 
-            public double preco { get; set; }
+            public double Preco { get; set; }
 
-            public double sku { get; set; }
+            public double Sku { get; set; }
     }
 }
