@@ -56,13 +56,13 @@ namespace WebApplication.Controllers
         {
             try
             {
-                HttpResponseMessage response = await produto.PostAsJsonAsync("https://localhost:44372/api/values", produtos); //sends a POST request to API and send to the body the second parameter serialized 
-                return RedirectToAction("Index"); // and returns to the Home Page
+                HttpResponseMessage response = await produto.PostAsJsonAsync("https://localhost:44372/api/values", produtos); 
+                return RedirectToAction("Index"); 
             }
             catch (Exception e)
             {
-                string erro = e.GetBaseException().ToString(); // in case of error he simply keep the error message
-                return RedirectToAction("Index"); // and returns to the Home Page
+                string erro = e.GetBaseException().ToString(); 
+                return RedirectToAction("Index"); 
             }
         }
 
@@ -70,18 +70,18 @@ namespace WebApplication.Controllers
         {
             try
             {
-                produtos.Id = 1; // putting a value because it cannot be null
-                string DadosProdutos = JsonConvert.SerializeObject(produtos); // Serializing object to put in the JsonObject
+                
+                string DadosProdutos = JsonConvert.SerializeObject(produtos);
 
-                JObject jsonClient = JObject.Parse(DadosProdutos); // putting in the JsonObject
+                JObject jsonClient = JObject.Parse(DadosProdutos); 
 
-                HttpResponseMessage response = await produto.PutAsJsonAsync("https://localhost:44372/api/values" + id, jsonClient); //sends a DELETE request to API with the body as Json
-                return RedirectToAction("Index"); // and returns to the Home Page
+                HttpResponseMessage response = await produto.PutAsJsonAsync("https://localhost:44372/api/values" + id, jsonClient); 
+                return RedirectToAction("Index"); 
             }
             catch (Exception e)
             {
-                string erro = e.GetBaseException().ToString(); // in case of error he simply keep the error message
-                return RedirectToAction("Index"); // and returns to the Home Page
+                string erro = e.GetBaseException().ToString();
+                return RedirectToAction("Index");
             }
         }
 
@@ -90,11 +90,11 @@ namespace WebApplication.Controllers
             
             try
             {
-                 // If he is already disable, lets active him
-                    HttpResponseMessage response = await produto.DeleteAsync("https://localhost:44372/api/values" + id); //sends a DELETE request to API
+                
+                    HttpResponseMessage response = await produto.DeleteAsync("https://localhost:44372/api/values" + id); 
                 
 
-                return RedirectToAction("Index"); // and returns to the Home Page
+                return RedirectToAction("Index"); //
             }
             catch (Exception e)
             {

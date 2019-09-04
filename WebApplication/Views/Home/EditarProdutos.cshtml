@@ -4,17 +4,17 @@
     ViewData["Title"] = "Editar Produtos";
 }
 
-@using (Html.BeginForm("UpdateProdutos", "Home", FormMethod.Post, new { }))
+@using (Html.BeginForm("UpdateProdutos", "Home", FormMethod.Get, new { }))
 {
 
- 
+
     <div class="form-group">
-    @Html.Label("Produtos:")
-    @Html.TextBoxFor(x => x.Produto, "", new { @class = "form-control", id = "Produtos" })
-</div>
+        @Html.Label("Produtos:")
+        @Html.TextBoxFor(x => x.Produto, "", new { @class = "form-control", id = "Produtos" })
+    </div>
     <div class="form-group">
         @Html.Label("preco:")
-        @Html.TextBoxFor(x => x.Preco, "", new { @class = "form-control", id = "Preco", autocomplete = "off",  })
+        @Html.TextBoxFor(x => x.Preco, "", new { @class = "form-control", id = "Preco", autocomplete = "off", })
     </div>
     <div class="form-group">
         @Html.Label("Sku:")

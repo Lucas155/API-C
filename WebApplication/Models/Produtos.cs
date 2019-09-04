@@ -11,7 +11,7 @@ namespace WebApplication.Models
     {
             [BsonId]
             [BsonRepresentation(BsonType.ObjectId)]
-            public string Id { get; set; }
+            public string _id { get; set; }
 
             public string Produto { get; set; }
 

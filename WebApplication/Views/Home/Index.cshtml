@@ -5,7 +5,15 @@
 
 }
 
+
+<head>
+
+
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" ></script>
+</head>
+
 <h1>Lista de Produto</h1>
+
 
 <table class="table">
     <thead class="thead-dark">
@@ -24,10 +32,10 @@
     {
         @foreach (var item in Model)
         {
-            <tbody>
+            <tbody id="Form">
                 <tr>
-                    <td>@Html.DisplayFor(modelItem => item.Id)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Produto)</td>
+                    <td>@Html.DisplayFor(modelItem => item._id, "", new { @class = "form-control", id = "iditem" }))</td>
+                    <td>@Html.DisplayFor(modelItem => item.Produto, new { @class = "form-control", id = "produto" })</td>
                     <td>@Html.DisplayFor(modelItem => item.Preco)</td>
                     <td>@Html.DisplayFor(modelItem => item.Sku)</td>
                     <td>
@@ -37,7 +45,7 @@
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ExemploModalCentralizado">Editar</button>
                     </td>
                     <td>
-                        @Html.ActionLink("EditarProdutos", "EditarProdutos", new {Id = item.Id, Produtos = item.Produto, Preco = item.Preco, Sku = item.Sku})
+                        @Html.ActionLink("EditarProdutos", "EditarProdutos", new { _id = item._id, Produtos = item.Produto, Preco = item.Preco, Sku = item.Sku })
                     </td>
                     <td>
                         @*@Html.ActionLink("Inactive", "Delete", new { id = item.id})*@
@@ -46,11 +54,10 @@
                 </tr>
             </tbody>
             
-                        
+
         }
     }
 
-   
 
 </table>
 
@@ -91,27 +98,33 @@
 
 <script>
 
+    var text = document.getElementById('abc');
+    console.log(text.value);
+    
+
     function DeleteProduto() {
 
-        var answer = window.confirm("Are you sure you want to DELETE this Client ?")
-        if (answer) {
+        var id = document.getElementById('iditem');
+        console.log(id);
 
-        // AJAX Delete Request to API
+            console.log(id);
 
-        $.ajax({
-            url: 'https://localhost:44372/api/values'+ id, // url
-            type: 'DELETE', // request type
-            success: function (msg) { 
-                alert(msg); // if the request be succesifully 
-            },
-            error: function (xhr, textStatus, errorThrown) {
-                alert("error: \n" + xhr.catch); // if the request return error
-            }
-        });
+            $.ajax({
+                url: 'https://localhost:44372/api/values', // url
+                type: 'DELETE', //POST GET DELETE PUT
+                async: true,
+                data: $(id),
+                success: function (resp) {
+                    console.log(resp);
+
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    alert("error: \n" + xhr.catch); // if the request return error
+                }
+            });
 
         }
-    }
-
+             
 
     function teste() {
         alert("OPA");
