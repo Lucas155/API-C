@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using WebApplication.Models;
+using static Microsoft.AspNetCore.Hosting.Internal.HostingApplication;
 
 namespace WebApplication.Controllers
 {
@@ -66,16 +67,16 @@ namespace WebApplication.Controllers
             }
         }
 
-        public async Task<IActionResult> UpdateProdutos(int id, Produtos produtos)
+        public async Task<IActionResult> UpdateProdutos(string _id, Produtos produtos)
         {
             try
             {
-                
+                //produtos._id;   
                 string DadosProdutos = JsonConvert.SerializeObject(produtos);
 
-                JObject jsonClient = JObject.Parse(DadosProdutos); 
+                JObject jsonProduto = JObject.Parse(DadosProdutos); 
 
-                HttpResponseMessage response = await produto.PutAsJsonAsync("https://localhost:44372/api/values" + id, jsonClient); 
+                HttpResponseMessage response = await produto.PutAsJsonAsync("https://localhost:44372/api/values" + _id, jsonProduto); 
                 return RedirectToAction("Index"); 
             }
             catch (Exception e)
@@ -85,12 +86,13 @@ namespace WebApplication.Controllers
             }
         }
 
+
         public async Task<IActionResult> Delete(string id )
         {
             
             try
             {
-                
+          
                     HttpResponseMessage response = await produto.DeleteAsync("https://localhost:44372/api/values" + id); 
                 
 

@@ -9,10 +9,38 @@
 <head>
 
 
-    <script src="https://code.jquery.com/jquery-2.2.4.min.js" ></script>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 </head>
 
 <h1>Lista de Produto</h1>
+
+@*<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Nome do produto</th>
+            <th scope="col">Valor</th>
+            <th scope="col">Imagem</th>
+            <th scope="col">Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="x in listaProdutos">
+            <td>
+            </td>
+            <td>{x.Valor}</td>
+            <td>{x.Foto}</td>
+            <td>
+                <a data-id="{x => x.Id}"
+                   data-nome="{x.Nome}"
+                   data-valor="{x.Valor}"
+                   data-foto="x.Foto"
+                   style="color: inherit;" href="#" data-toggle="modal" data-target="#modalEditar">Editar</a> &nbsp;
+                <a ng-click="excluirProduto(x.Id)" style="color: inherit;" href="#">Excluir</a>
+            </td>
+        </tr>
+    </tbody>
+</table>*@
 
 
 <table class="table">
@@ -34,30 +62,26 @@
         {
             <tbody id="Form">
                 <tr>
-                    <td>@Html.DisplayFor(modelItem => item._id, "", new { @class = "form-control", id = "iditem" }))</td>
+                    <td>@Html.DisplayFor(modelItem => item._id, "", new { @class = "form-control", id = "iditem" })</td>
                     <td>@Html.DisplayFor(modelItem => item.Produto, new { @class = "form-control", id = "produto" })</td>
                     <td>@Html.DisplayFor(modelItem => item.Preco)</td>
                     <td>@Html.DisplayFor(modelItem => item.Sku)</td>
                     <td>
-                        <button type="submit" id="delete" class="btn btn-primary" onclick="DeleteProduto()">Delete</button>
+                        <button type="submit" id="delete" class="btn btn-primary" onclick="deleteProduto('@(item._id)')">Delete</button>
                     </td>
                     <td>
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ExemploModalCentralizado">Editar</button>
                     </td>
                     <td>
-                        @Html.ActionLink("EditarProdutos", "EditarProdutos", new { _id = item._id, Produtos = item.Produto, Preco = item.Preco, Sku = item.Sku })
-                    </td>
-                    <td>
-                        @*@Html.ActionLink("Inactive", "Delete", new { id = item.id})*@
+                        @Html.ActionLink("EditarProdutos", "EditarProdutos", new {  _id = item._id, Produto = item.Produto, Preco = item.Preco, Sku = item.Sku})
 
                     </td>
+                    
                 </tr>
             </tbody>
-            
 
         }
     }
-
 
 </table>
 
@@ -71,63 +95,83 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div>
+            <form id="#pega-form-update">
+                <div>
 
 
-                @Html.Label("Produto:")
-                @Html.TextBox("frmUserName", "")
-                <br />
+                    <div class="grupo">
+                        <label>id</label>
+                        <input id="id" name="id" type="text" placeholder="" value="5d71156f3f56061ffcb631ff" class="campo campo-medio">
+                    </div>
+                    <div class="grupo">
+                        <label>produtos</label>
+                        <input id="Produto" name="Produto" type="text" placeholder="" value="bala" class="campo campo-medio">
+                    </div>
+                    <div class="grupo">
+                        <label>Preço</label>
+                        <input id="Preco" name="Preco" type="number" placeholder="" value="5" class="campo campo-medio">
+                    </div>
+                    <div class="grupo">
+                        <label>Sku</label>
+                        <input id="Sku" name="Sku" type="number" placeholder="" value="4" class="campo campo-medio">
+                    </div>
 
-                @Html.Label("Preço:")
-                @Html.TextBox("frmUserName", "")
-                <br />
-
-                @Html.Label("Sku:")
-                @Html.TextBox("frmUserName", "")
 
 
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary">Salvar mudanças</button>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-primary" onclick="put()">Salvar mudanças</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 
 <script>
 
-    var text = document.getElementById('abc');
-    console.log(text.value);
-    
+   function deleteProduto() {
 
-    function DeleteProduto() {
+        $.ajax({
+            url: 'https://localhost:44372/api/values/' + arguments[0], // url
+            type: 'DELETE', // request type
+            success: function (msg) { 
+                alert("Produtos deletado com sucesso");
+                location.reload();
+                
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                alert("error: \n" + xhr.catch); // if the request return error
+            }
+        });
+}
 
-        var id = document.getElementById('iditem');
-        console.log(id);
+    function put() {
 
-            console.log(id);
+         $("#pega-form-update").on("submit", function () {
+            var form = this;
+            console.log(form.Produto.value);
+            console.log(form.Preco.value);
+            console.log(form.Sku.value);
+
+
 
             $.ajax({
-                url: 'https://localhost:44372/api/values', // url
-                type: 'DELETE', //POST GET DELETE PUT
+                url: 'https://localhost:44372/api/values/',
+                type: 'PUT', 
                 async: true,
-                data: $(id),
-                success: function (resp) {
-                    console.log(resp);
+                data: $(this).serialize(),
+                success: function (resposta) {
+                    console.log(resposta);
 
                 },
-                error: function (xhr, textStatus, errorThrown) {
-                    alert("error: \n" + xhr.catch); // if the request return error
+                error: function (error) {
                 }
             });
 
-        }
-             
+        });
 
-    function teste() {
-        alert("OPA");
     }
 
+      
 </script>

@@ -4,16 +4,19 @@
     ViewData["Title"] = "Editar Produtos";
 }
 
-@using (Html.BeginForm("UpdateProdutos", "Home", FormMethod.Get, new { }))
+@using (Html.BeginForm("UpdateProdutos", "Home", FormMethod.Post, new { }))
 {
 
-
+    <div class="form-group">
+        @Html.Label("id:")
+        @Html.TextBoxFor(x => x._id, "", new { @class = "form-control", id = "_id" })
+    </div>
     <div class="form-group">
         @Html.Label("Produtos:")
         @Html.TextBoxFor(x => x.Produto, "", new { @class = "form-control", id = "Produtos" })
     </div>
     <div class="form-group">
-        @Html.Label("preco:")
+        @Html.Label("Preco:")
         @Html.TextBoxFor(x => x.Preco, "", new { @class = "form-control", id = "Preco", autocomplete = "off", })
     </div>
     <div class="form-group">
@@ -21,13 +24,7 @@
         @Html.TextBoxFor(x => x.Sku, "", new { @class = "form-control", id = "Sku", autocomplete = "off" })
     </div>
     <div class="form-group">
-        <input type="submit" id="div_Button" value="Finish Register" />
+        <input type="submit" id="Editar" value="Editar Produtos" />
     </div>
 
 }
-
-
-
-
-
-
