@@ -9,7 +9,7 @@ namespace MongoApi.Models
 {
     public class Produtos
     {
-        
+        [BsonIgnoreIfDefault]
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string _id { get; set; }
